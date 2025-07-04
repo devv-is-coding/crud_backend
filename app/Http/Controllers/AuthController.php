@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function register(Request $request){
-        $data = $reqesut->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|confirmed',
         ]);
 
         User::create($data);
@@ -54,7 +54,7 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
-    
+
     public function logout(){
 
         Auth::logout();
