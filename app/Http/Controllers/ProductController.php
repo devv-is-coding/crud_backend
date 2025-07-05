@@ -60,6 +60,10 @@ class ProductController extends Controller
             'title' => 'required|string|max:80',
         ]);
 
+        $data['description'] = isset($request->description) ? $request->description : $product->description;
+        $data['cost'] = isset($request->cost) ? $request->cost : $product->cost;
+
+
         if($request->hasFile('banner_image')) {
            if($product->banner_image) {
                 Storage::disk('public')->delete($product->banner_image);
@@ -75,12 +79,15 @@ class ProductController extends Controller
     }
 
    
-    public function destroy(string $id)
-    {
-        $product->delete();
-        return response()->json([
-            'status' => true,
-            'message' => 'Product deleted successfully',
-        ]);
-    }
+  public function destroy(Product $product)
+   {
+    $product->delete();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Product deleted successfully',
+    ]);
+   }
+
+
 }
